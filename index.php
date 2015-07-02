@@ -53,41 +53,179 @@
         
       </div>
     </nav>
-      
+      <div class="jumbotron ">
+      <div class="container starter-template">
+        <h1>Mariocoski Bootstrap Calendar</h1>
+        <p>This is a bootstrap plugin which allow user to make an appointment. All you need is simply download the project, update the paths & credentials and create database tables</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Download</a></p>
+      </div>
+    </div>
     <div class="container">
 
-      <div class="starter-template">
-        <h1>Mariocoski Bootstrap Calendar</h1>
-        <p class="lead">This is a bootstrap plugin which allow user to make an appointment<br> All you need is simply download the project and change the paths and credentials</p>
-      </div>
+     
       <div class="row">  
           <div class='col-sm-8'>
             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-    <li data-target="#myCarousel" data-slide-to="3"></li>
-  </ol>
+ 
 
   <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
+  <div class="carousel-inner table table-bordered" role="listbox">
+      
     <div class="item active">
-        <h2>Week 1</h2>
+      <div class="bootstrap-calendar">  
+        <table class="table table-calendar">
+          <thead>
+            <tr>  
+              <td class="calendar-day-heading">Monday</td>    
+              <td class="calendar-day-heading">Tuesday</td> 
+              <td class="calendar-day-heading">Wednesday</td> 
+              <td class="calendar-day-heading">Thursday</td> 
+              <td class="calendar-day-heading">Friday</td> 
+              <td class="calendar-day-heading">Saturday</td> 
+              <td class="calendar-day-heading">Sunday</td> 
+            </tr>
+            <tr>  
+              <td class="calendar-day-date">06 July</td>    
+              <td class="calendar-day-date">07 July</td> 
+              <td class="calendar-day-date">08 July</td> 
+              <td class="calendar-day-date">09 July</td> 
+              <td class="calendar-day-date">10 July</td> 
+              <td class="calendar-day-date">11 July</td> 
+              <td class="calendar-day-date">12 July</td> 
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body "></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>  
     </div>
 
     <div class="item">
-      <h2>Week 2</h2>
+      <div class="bootstrap-calendar">  
+        <table class="table table-calendar">
+          <thead>
+            <tr>  
+              <td class="calendar-day-heading">Monday</td>    
+              <td class="calendar-day-heading">Tuesday</td> 
+              <td class="calendar-day-heading">Wednesday</td> 
+              <td class="calendar-day-heading">Thursday</td> 
+              <td class="calendar-day-heading">Friday</td> 
+              <td class="calendar-day-heading">Saturday</td> 
+              <td class="calendar-day-heading">Sunday</td> 
+            </tr>
+            <tr>  
+              <td class="calendar-day-date">06 July</td>    
+              <td class="calendar-day-date">07 July</td> 
+              <td class="calendar-day-date">08 July</td> 
+              <td class="calendar-day-date">09 July</td> 
+              <td class="calendar-day-date">10 July</td> 
+              <td class="calendar-day-date">11 July</td> 
+              <td class="calendar-day-date">12 July</td> 
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body "></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>  
     </div>
 
     <div class="item">
-      <h2>Week 3</h2>
+      <div class="bootstrap-calendar">  
+        <table class="table table-calendar">
+          <thead>
+            <tr>  
+              <td class="calendar-day-heading">Monday</td>    
+              <td class="calendar-day-heading">Tuesday</td> 
+              <td class="calendar-day-heading">Wednesday</td> 
+              <td class="calendar-day-heading">Thursday</td> 
+              <td class="calendar-day-heading">Friday</td> 
+              <td class="calendar-day-heading">Saturday</td> 
+              <td class="calendar-day-heading">Sunday</td> 
+            </tr>
+            <tr>  
+              <td class="calendar-day-date">06 July</td>    
+              <td class="calendar-day-date">07 July</td> 
+              <td class="calendar-day-date">08 July</td> 
+              <td class="calendar-day-date">09 July</td> 
+              <td class="calendar-day-date">10 July</td> 
+              <td class="calendar-day-date">11 July</td> 
+              <td class="calendar-day-date">12 July</td> 
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body "></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>  
     </div>
 
     <div class="item">
-      <h2>Week 4</h2>
-    </div>
+      <div class="bootstrap-calendar">  
+        <table class="table table-calendar">
+          <thead>
+            <tr>  
+              <td class="calendar-day-heading">Monday</td>    
+              <td class="calendar-day-heading">Tuesday</td> 
+              <td class="calendar-day-heading">Wednesday</td> 
+              <td class="calendar-day-heading">Thursday</td> 
+              <td class="calendar-day-heading">Friday</td> 
+              <td class="calendar-day-heading">Saturday</td> 
+              <td class="calendar-day-heading">Sunday</td> 
+            </tr>
+            <tr>  
+              <td class="calendar-day-date">06 July</td>    
+              <td class="calendar-day-date">07 July</td> 
+              <td class="calendar-day-date">08 July</td> 
+              <td class="calendar-day-date">09 July</td> 
+              <td class="calendar-day-date">10 July</td> 
+              <td class="calendar-day-date">11 July</td> 
+              <td class="calendar-day-date">12 July</td> 
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body "></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body  day-even"></td>
+              <td class="calendar-day-body"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>  
+  </div>
   </div>
 
   <!-- Left and right controls -->
