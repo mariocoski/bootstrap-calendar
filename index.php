@@ -61,10 +61,9 @@
       </div>
     </div>
     <div class="container">
-
-     
       <div class="row">  
-          <div class='col-sm-8'>
+          <div class="col-sm-4 visible-xs">Small calendar</div>
+          <div class='col-sm-8 hidden-xs'>
             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
  
 
@@ -97,7 +96,18 @@
           </thead>
           <tbody>
             <tr>
-              <td class="calendar-day-body"></td>
+              <td class="calendar-day-body">
+                <ul class="list-unstyled">
+                    <li><a href="#" class="btn btn-link calendar-active-link">10.00</a></li>
+                    <li><a href="#" class="btn btn-link calendar-active-link">11.00</a></li> 
+                    <li><a href="#" class="btn btn-link calendar-active-link">12.00</a></li> 
+                    <li><a href="#" class="btn btn-link calendar-active-link">13.00</a></li> 
+                    <li><a href="#" class="btn btn-link calendar-active-link">14.00</a></li> 
+                    <li><a href="#" class="btn btn-link calendar-active-link">15.00</a></li> 
+                    <li><a href="#" class="btn btn-link calendar-active-link">16.00</a></li>
+                    <li><a href="#" class="btn btn-link calendar-active-link">more</a></li> 
+                </ul>
+              </td>
               <td class="calendar-day-body  day-even"></td>
               <td class="calendar-day-body "></td>
               <td class="calendar-day-body  day-even"></td>
