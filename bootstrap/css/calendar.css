@@ -10,6 +10,10 @@ and open the template in the editor.
 
 /* SITE LAYOUT */
 
+.marg-top {
+    margin-top: 20px;
+}
+
 /* address-panel layout */
 .panel-address{
     padding: 5px;
@@ -216,7 +220,10 @@ and open the template in the editor.
 
 /* HORIZONTAL CALENDAR SMALL */
 
-
+.horizontal-calendar-small-booked{
+    text-decoration:line-through;
+    font-weight: bold;
+}
 
 /* VERTICAL CALENDAR */
 
