@@ -6,14 +6,26 @@
 
 
 $(document).ready(function(){
+  
+  var bigCalendarOptions = {
+      "ajax_url"   : "process.php",
+      "calendar_type"  : "big",
+      "weeks_number" : 4
+  };
+ 
+  $(".horizontal-calendar-big-wrapper").bootstrapBigCalendar(bigCalendarOptions);  
+   
     
-  $(".carousel-control").click(function(){
-    //set overflow to hidden to not display the slides oveflow  
-      $(".carousel-inner").css("overflow","hidden");
-  });  
+    $('.horizontal-calendar-big-wrapper').on("click", ".carousel-control", function() {
+        $(".carousel-inner").css("overflow","hidden");
+   }); 
+    
+  
+  
+  
     
   $('.horizontal-calendar-big-wrapper').on('slid.bs.carousel', function () {
-     var id = $(this).attr("id");
+     var id = $(this).attr("data-calendar-id");
     if($('#carousel_inner_'+id+ ' .item:first').hasClass('active')) {
       $(this).children('.horizontal-calendar-big-left').hide();
     }else{

@@ -47,8 +47,7 @@ if(isset($_POST)){
           }
           //2. item content
 $output .= <<<EOT
-        
-        <div class="horizontal-calendar-big-content">  
+  <div class="horizontal-calendar-big-content">  
   <table class="table">
     <tr class="horizontal-calendar-big-day-names">  
       <td>Monday</td>    

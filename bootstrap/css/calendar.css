@@ -10,6 +10,12 @@ and open the template in the editor.
 
 /* SITE LAYOUT */
 
+.preloader{
+    height: 340px;
+    width: 100%;
+    background: url("../../img/preloader.gif") 50% 50% no-repeat; 
+}
+
 .marg-top {
     margin-top: 20px;
 }
@@ -107,9 +113,12 @@ and open the template in the editor.
   }
   
 /* overriding this property allows dropdown menu to display properly */
-  .carousel-inner{
+  /*.carousel-inner{
       overflow: visible;
-  }  
+  } */
+  .horizontal-calendar-big-wrapper{
+      overflow: visible;
+  } 
   
 .horizontal-calendar-big-content{
     position: absolute;
