@@ -1,6 +1,5 @@
 <?php
 require 'config/init.php';
-  
 header('Access-Control-Allow-Origin: http://localhost/calendar/');
 header('Access-Control-Allow-Methods: POST');
  
@@ -29,7 +28,7 @@ if(isset($_POST)){
         WHERE mariocoski_calendar.calendar_id=:id";
        // $run = $db->prepare($query);
        // $run->execute(array(":id"=>$calendar_id));
-       // $result = $run->fetchAll(PDO::FETCH_OBJ);
+       // $result = $run->fetchAll(PDO::FETCH_ASSOC);
        // echo json_encode(array("success"=>true,"content"=>$result));
        // exit;
         /* check how many weeks */
@@ -37,7 +36,11 @@ if(isset($_POST)){
         
         $output = "<div class='carousel-inner' id='carousel_inner_$calendar_id' role='listbox'>";
         //loop which create slides items
-        for($i = 0; $i<$week_number; $i++){
+        $current_week = date('W'); // i.e. 14
+        $current_year = date('o'); //iso format
+        $month_name = date("F"); // month name i.e. January, February etc.
+        
+        for($i = 0; $i<$week_number; $i++, $current_week++){
          
           //1. item heading
           if($i == 0){
@@ -46,10 +49,12 @@ if(isset($_POST)){
             $output .= "<div class='item'>"; 
           }
           //2. item content
-$output .= <<<EOT
-  <div class="horizontal-calendar-big-content">  
-  <table class="table">
-    <tr class="horizontal-calendar-big-day-names">  
+        
+          
+$output .= "<div class='horizontal-calendar-big-content'><table class='table'>";  
+      
+$output .="
+    <tr class='horizontal-calendar-big-day-names'>  
       <td>Monday</td>    
       <td>Tuesday</td> 
       <td>Wednesday</td> 
@@ -58,7 +63,7 @@ $output .= <<<EOT
       <td>Saturday</td> 
       <td>Sunday</td> 
     </tr>  
-    <tr class="horizontal-calendar-day-numbers">  
+    <tr class='horizontal-calendar-day-numbers'>  
       <td>06 November</td>    
       <td>07 November</td> 
       <td>08 November</td> 
@@ -67,29 +72,30 @@ $output .= <<<EOT
       <td>11 November</td> 
       <td>12 November</td> 
     </tr>
-    <tr class="horizontal-calendary-day-hours">
+    <tr class='horizontal-calendary-day-hours'>
       <td>
-        <ul class="list-unstyled ">
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">8:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">9:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">10:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">11:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">12:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">13:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">14:00</a></li>
-          <li><a rel="nofollow" class="horizontal-calendar-big-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">more</a>
-              <ul class="dropdown-menu ">
-                <li rel="nofollow" class="horizontal-calendar-big-booked"><span class="booked-visit">12.30</span></li>
-                <li><a rel="nofollow" class="" href="">18:00</a></li>
-                <li><a rel="nofollow" class="" href="">8:00</a></li>
-                <li><a rel="nofollow" class="" href="">8:00</a></li>
-                <li ><a rel="nofollow" class="" href="">18:00</a></li>
-                <li rel="nofollow" class="horizontal-calendar-big-booked"><span class="booked-visit">12.30</span></li>
-                <li ><a rel="nofollow" class="" href="">8:00</a></li>
-                <li ><a rel="nofollow" class="" href="">8:00</a></li>
-                <li ><a rel="nofollow" class="" href="">18:00</a></li>
-                <li rel="nofollow" class="horizontal-calendar-big-booked"><span class="booked-visit">12.30</span></li>
-              </ul>
+        <ul class='list-unstyled '>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><span class='booked-visit'>12.30</span></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          
+       
+        <li><a rel='nofollow' class='horizontal-calendar-big-link dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' href=''>more</a>
+              <ul class='dropdown-menu'>
+                <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>
+             </ul>
           </li>
         </ul>
       </td>
@@ -99,38 +105,35 @@ $output .= <<<EOT
         <td></td>
         <td></td>
         <td>
-          <ul class="list-unstyled ">
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">8:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">9:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">10:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">11:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">12:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">13:00</a></li>
-          <li class="horizontal-calendar-big-list-item"><a rel="nofollow" class="horizontal-calendar-big-link" href="">14:00</a></li>
-          <li><a rel="nofollow" class="horizontal-calendar-big-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">more</a>
-              <ul class="dropdown-menu ">
-                <li rel="nofollow" class="horizontal-calendar-big-booked"><span class="booked-visit">12.30</span></li>
-                <li><a rel="nofollow" class="" href="">18:00</a></li>
-                <li><a rel="nofollow" class="" href="">8:00</a></li>
-                <li><a rel="nofollow" class="" href="">8:00</a></li>
-                <li ><a rel="nofollow" class="" href="">18:00</a></li>
-                <li rel="nofollow" class="horizontal-calendar-big-booked"><span class="booked-visit">12.30</span></li>
-                <li ><a rel="nofollow" class="" href="">8:00</a></li>
-                <li ><a rel="nofollow" class="" href="">8:00</a></li>
-                <li ><a rel="nofollow" class="" href="">18:00</a></li>
-                <li rel="nofollow" class="horizontal-calendar-big-booked"><span class="booked-visit">12.30</span></li>
-              </ul>
+         <ul class='list-unstyled '>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><span class='booked-visit'>12.30</span></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
+          
+       
+        <li><a rel='nofollow' class='horizontal-calendar-big-link dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' href=''>more</a>
+              <ul class='dropdown-menu'>
+                <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+                <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>
+             </ul>
           </li>
-        </ul>      
+        </ul>
       </td>
        
     </tr>
   </table>
-</div><!--bootstrap-calendar-->
-
-        
-EOT;
-  
+</div><!--bootstrap-calendar-->";
           
           
           
