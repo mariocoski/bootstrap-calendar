@@ -219,11 +219,7 @@ public function prepareBigOutput($results=array(),$calendar_id,$first_day=0,$met
                   $output .= " <li><a rel='nofollow' class='' href=''>".date("H:i",$timestamp_to_compare)."</a></li>";
                 }
                 /*<li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>.date("H:i".$timestamp_to_compare).</span></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
+          
                 <li><a rel='nofollow' class='' href=''>18:00</a></li>
                 <li><a rel='nofollow' class='' href=''>18:00</a></li>
                 <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>*/
