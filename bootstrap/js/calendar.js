@@ -8,11 +8,13 @@
 $(document).ready(function(){
   
   var bigCalendarOptions = {
-      "ajax_url"   : "process.php",
-      "calendar_type"  : "big",
-      "weeks_number" : 4
+      "ajax_url"       : "process.php", //url for retrieving the data
+      "calendar_type"  : "big", 
+      "number_of_weeks": 4, //how many weeks to display
+      "first_day"      : "monday", //or sunday
+      "booking_url"    : "make_an_appointment.php", //booking url 
+      "max_display"    : 7 //how many visits display in a day calendar column - default is 7
   };
- 
   $(".horizontal-calendar-big-wrapper").bootstrapBigCalendar(bigCalendarOptions);  
    
     
