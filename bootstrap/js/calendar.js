@@ -22,9 +22,6 @@ $(document).ready(function(){
         $(".carousel-inner").css("overflow","hidden");
    }); 
     
-  
-  
-  
     
   $('.horizontal-calendar-big-wrapper').on('slid.bs.carousel', function () {
      var id = $(this).attr("data-calendar-id");
