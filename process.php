@@ -4,19 +4,28 @@ header('Access-Control-Allow-Origin: http://localhost/calendar/');
 header('Access-Control-Allow-Methods: POST');
  
 if(isset($_POST)){
- 
-  if(isset($_POST['calendar_type']) && !empty($_POST['calendar_type']) && isset($_POST['id']) && is_numeric($_POST['id'])&& isset($_POST['weeks_number']) && is_numeric($_POST['weeks_number'])){
+  
+  if(isset($_POST['calendar_type']) && !empty($_POST['calendar_type']) && isset($_POST['id']) && is_numeric($_POST['id'])&& isset($_POST['number_of_weeks']) && is_numeric($_POST['number_of_weeks'])){
     if($_POST['calendar_type']=='big'){
-      $calendar_id = Helper::sanitize($_POST['id']);
-      $week_number = (int)($_POST['weeks_number']);
+ 
+      //HORIZONTAL BIG CALENDAR
+      $calendar_id = (int)($_POST['id']); //sanitize numeric value
+      $number_of_weeks = (int)($_POST['number_of_weeks']);//sanitize numeric value
      
-      if($week_number ==0){
+      if($number_of_weeks == 0 || $calendar_id == 0){
         echo json_encode(array("success"=>false,"content"=>array()));
         exit;
       }
       
-      
-      
+      $booking_url = isset($_POST['booking_url'])? Helper::sanitize($_POST['booking_url']):"";
+      $max_display = (isset($_POST['max_display']))? (int)($_POST['max_display']) : 7;
+    
+      //set first day
+      if(isset($_POST['first_day']) && strtolower($_POST['first_day'])=='sunday'){
+        $first_day = 0;
+      }else{
+        $first_day = 1;
+      }
       try{
         $db = new DB();
         $query = "SELECT mariocoski_event.*
@@ -25,146 +34,14 @@ if(isset($_POST)){
         ON mariocoski_event.calendar_id = mariocoski_user_calendar.calendar_id
         INNER JOIN mariocoski_calendar
         ON mariocoski_calendar.calendar_id = mariocoski_user_calendar.calendar_id
-        WHERE mariocoski_calendar.calendar_id=:id";
-       // $run = $db->prepare($query);
-       // $run->execute(array(":id"=>$calendar_id));
-       // $result = $run->fetchAll(PDO::FETCH_ASSOC);
-       // echo json_encode(array("success"=>true,"content"=>$result));
-       // exit;
-        /* check how many weeks */
-   
+        WHERE mariocoski_calendar.calendar_id=:id ORDER BY timestamp ASC";
+        $run = $db->prepare($query);
+        $run->execute(array(":id"=>$calendar_id));
+        $results = $run->fetchAll(PDO::FETCH_ASSOC);
+        $helper = new Helper();
         
-        $output = "<div class='carousel-inner' id='carousel_inner_$calendar_id' role='listbox'>";
-        //loop which create slides items
-        $current_week = date('W'); // i.e. 14
-        $current_year = date('o'); //iso format
-        $month_name = date("F"); // month name i.e. January, February etc.
-        
-        for($i = 0; $i<$week_number; $i++, $current_week++){
-         
-          //1. item heading
-          if($i == 0){
-            $output .= "<div class='item active'>";
-          }else{
-            $output .= "<div class='item'>"; 
-          }
-          //2. item content
-        
-          
-$output .= "<div class='horizontal-calendar-big-content'><table class='table'>";  
-      
-$output .="
-    <tr class='horizontal-calendar-big-day-names'>  
-      <td>Monday</td>    
-      <td>Tuesday</td> 
-      <td>Wednesday</td> 
-      <td>Thursday</td> 
-      <td>Friday</td> 
-      <td>Saturday</td> 
-      <td>Sunday</td> 
-    </tr>  
-    <tr class='horizontal-calendar-day-numbers'>  
-      <td>06 November</td>    
-      <td>07 November</td> 
-      <td>08 November</td> 
-      <td>09 November</td> 
-      <td>10 November</td> 
-      <td>11 November</td> 
-      <td>12 November</td> 
-    </tr>
-    <tr class='horizontal-calendary-day-hours'>
-      <td>
-        <ul class='list-unstyled '>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><span class='booked-visit'>12.30</span></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          
-       
-        <li><a rel='nofollow' class='horizontal-calendar-big-link dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' href=''>more</a>
-              <ul class='dropdown-menu'>
-                <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>
-             </ul>
-          </li>
-        </ul>
-      </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-         <ul class='list-unstyled '>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><span class='booked-visit'>12.30</span></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          <li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='''>8:00</a></li>
-          
-       
-        <li><a rel='nofollow' class='horizontal-calendar-big-link dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' href=''>more</a>
-              <ul class='dropdown-menu'>
-                <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li><a rel='nofollow' class='' href=''>18:00</a></li>
-                <li rel='nofollow' class='horizontal-calendar-big-booked'><span class='booked-visit'>12.30</span></li>
-             </ul>
-          </li>
-        </ul>
-      </td>
-       
-    </tr>
-  </table>
-</div><!--bootstrap-calendar-->";
-          
-          
-          
-          
-          
-          //3. item background + ending
-          $output .= "<div class='horizontal-calendar-big-background'></div>
-                      <div class='horizontal-calendar-big-background'></div>
-                      <div class='horizontal-calendar-big-background'></div>
-                      </div><!--end of item-->
-                    ";
-            
-        } //end o loop
-        //left and right arrow
-        $output .= "</div><!--end of carousel-inner-->
-            <a class='left horizontal-calendar-big-left carousel-control'  id='left_$calendar_id' href='#horizontal-calendar-big-wrapper-$calendar_id' role='button' data-slide='prev'>
-              <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>
-              <span class='sr-only'>Previous</span>
-            </a>
-            <a class='right horizontal-calendar-big-right carousel-control' id='right_$calendar_id' href='#horizontal-calendar-big-wrapper-$calendar_id' role='button' data-slide='next'>
-              <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>
-              <span class='sr-only'>Next</span>
-            </a>";
-       
-               $output .="</div><!--end of horizontal-calendar-big-->" ;
-        
-        //end of wrapper
- 
-        
-         echo json_encode(array("success"=>true,"content"=>$output));
-        
+        $output = $helper->prepareBigOutput($results,$calendar_id,$first_day,$number_of_weeks, $booking_url ,$max_display);
+        echo json_encode(array("success"=>true,"content"=>$output));
         exit;
       }catch(PDOException $e){
         echo json_encode(array("success"=>false,"content"=>array()));
@@ -173,23 +50,144 @@ $output .="
         echo json_encode(array("success"=>false,"content"=>array()));
         exit;
       }
-    }else if($_POST['type']=='small'){
+    }else if($_POST['calendar_type']=='small'){
+      //HORIZONTAL SMALL CALENDAR
+      $calendar_id = (int)($_POST['id']); //sanitize numeric value
+      $number_of_weeks = (int)($_POST['number_of_weeks']);//sanitize numeric value
+      $in_advance = (isset($_POST['in_advance']))? (int)($_POST['in_advance']) : 86400;
+        
+      if($number_of_weeks == 0 || $calendar_id == 0){
+        echo json_encode(array("success"=>false,"content"=>array()));
+        exit;
+      }
+        $booking_url = isset($_POST['booking_url'])? Helper::sanitize($_POST['booking_url']):"";
+        $max_in_row = (isset($_POST['max_in_row']))? (int)($_POST['max_in_row']) : 4;
       
+      try{
+            $db = new DB();
+            $query_calendar = "SELECT * FROM `mariocoski_calendar` WHERE calendar_id=:calendar_id";
+            $run_calendar = $db->prepare($query_calendar);
+            $run_calendar->execute(array(":calendar_id"=>$calendar_id));
+            $calendar_details = $run_calendar->fetchAll(PDO::FETCH_ASSOC);
+       }catch(PDOException $e){
+            echo json_encode(array("success"=>false,"content"=>array()));
+            exit;
+          }catch(Exception $e){
+            echo json_encode(array("success"=>false,"content"=>array()));
+            exit;
+      }  
+        
+      if(isset($_POST['show']) && $_POST['show'] == "prev"){
+          //(int) $day_interval = 24 * 60 * 60; //seconds in a day
+          //$finish = $start + $day_interval; 
+        
+        
+      }else if(isset($_POST['show']) && $_POST['show'] == "prev"){
+        
+      }else{
+        //query db 
+       
+          try{
+            $query = "SELECT * FROM mariocoski_event
+                      WHERE calendar_id=:id AND timestamp>(NOW()+(:in_advance)) ORDER BY timestamp ASC";
+                      $run = $db->prepare($query);
+                      $run->execute(array(":id"=>$calendar_id,":in_advance"=>$in_advance));
+                      $results = $run->fetchAll(PDO::FETCH_ASSOC);
+
+          }catch(PDOException $e){
+            echo json_encode(array("success"=>false,"content"=>array()));
+            exit;
+          }catch(Exception $e){
+            echo json_encode(array("success"=>false,"content"=>array()));
+            exit;
+          }
+         // echo json_encode(array("success"=>true,"content"=>$results));
+          //exit;
+        if(count($results) > 0){
+           
+        //show the first free visit day
+          //first visit is a 
+          $first_visit = date("d-m-Y",strtotime($results[0]['timestamp']));
+          $start = strtotime($first_visit); // timestamp of d-m-Y 00:00:00
+          $_SESSION['timestamp'] = (int)$start;
+          
+          $day_results = array();
+          $counter = 0;
+          for($i=0; $i < count($results);$i++){
+            if(date("d-m-Y",$start) == date("d-m-Y",strtotime($results[$i]['timestamp']))){
+              $day_results[$counter] = $results[$i];
+              $counter++;
+            }
+          }
+           
+          $helper = new Helper();
+          $arrow_prev = false;
+          $arrow_next = true;
+          $output = $helper->prepareSmallOutput($day_results,$calendar_id, $booking_url, $max_in_row,$calendar_details,$arrow_prev,$arrow_next);
+          echo json_encode(array("success"=>true,"content"=>$output));
+          exit;
+        }
+        
+      
+      echo json_encode(array("success"=>true,"content"=>$output));
+      exit;
+      
+      }
     }else{
       echo json_encode(array("success"=>false,"content"=>array()));
       exit;
     }
+  }else{
+    echo json_encode(array("success"=>false,"content"=>array()));
+    exit;
   }
+}else{
+  echo json_encode(array("success"=>false,"content"=>array()));
+  exit;
 }
-/**
-* getMonthsCount checks if certain yeat has 53 or 52 weeks
-* @return Integer
-*/ 
-function getMonthsCount($year){
-    $date = new DateTime();
-    $date->setISODate($year, 53);
-    return ($date->format("W") === "53" ? 53 : 52);
-  }
 
 
+/*
+ * $day_24h = 24*60*60; //24h
+      $output = " <div class='panel panel-default'>
+              <div class='panel-heading'>
+                <table class='table'>  
+                  <tr class='text-center'>
+                    <td class='horizontal-calendar-small-left' id='horizontal-calendar-small-left-334455'><a href='' class='btn btn-primary btn-lg'><span class='glyphicon glyphicon-chevron-left'></span> </a></td>
+                    <td class='horizontal-calendar-small-center' id='horizontal-calendar-small-center-334455'><strong>Wednesday</strong>, 08 December</td>
+                    <td class='horizontal-calendar-small-right' id='horizontal-calendar-small-right-334455'><a href='' class='btn btn-primary btn-lg'> <span class='glyphicon glyphicon-chevron-right'></span></a></td>
+                  </tr>
+                </table>
+              </div><!--end of panel-heading-->
+              <div class='panel-body'>
+                <div class='horizontal-calendar-small-location' id='horizontal-calendar-small-location-334455'>
+                  <p><strong> Company Name</strong></p> 
+                  <p><span class='glyphicon glyphicon-map-marker'></span> Location 1</p>
+                  <p> Street Name, Postcode, Location </p>
+                </div>
+                <table class='table table-responsive horizontal-calendar-small-hours' id='horizontal-calendar-small-hours-334455'>
+                  <tr>
+                      <td><a href='' class='btn btn-primary btn-xs'> 8.30</a></td>
+                      <td><a href='' class='btn btn-primary btn-xs'> 9.00</a></td>
+                      <td><span class='horizontal-calendar-small-booked'>13.00</span></td>
+                      <td><a href='' class='btn btn-primary btn-xs'> 10.00</a></td>
+                  </tr>
+                  <tr>
+                      <td><a href='' class='btn btn-primary btn-xs'> 8.30</a></td>
+                      <td><a href='' class='btn btn-primary btn-xs'> 9.00</a></td>
+                      <td><span class='horizontal-calendar-small-booked'>13.00</span></td>
+                      <td><a href='' class='btn btn-primary btn-xs'> 10.00</a></td>
+                  </tr>
+                  <tr>
+                      <td><a href='' class='btn btn-primary btn-xs'> 8.30</a></td>
+                      <td><a href='' class='btn btn-primary btn-xs'> 9.00</a></td>
+                      <td><span class='horizontal-calendar-small-booked'>13.00</span></td>
+                      <td><a href='' class='btn btn-primary btn-xs'> 10.00</a></td>
+                  </tr>
+                
+                </table>
+                </div><!--end of panel-body-->
+            </div><!--end of panel-default-->";
+ * 
+ */
 ?>
