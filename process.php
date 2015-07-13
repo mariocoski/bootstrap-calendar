@@ -75,14 +75,110 @@ if(isset($_POST)){
           }catch(Exception $e){
             echo json_encode(array("success"=>false,"content"=>array()));
             exit;
-      }  
-        
+      } 
+       
       if(isset($_POST['show']) && $_POST['show'] == "prev"){
-          //(int) $day_interval = 24 * 60 * 60; //seconds in a day
-          //$finish = $start + $day_interval; 
+      
+      /* PREV BUTTON */  
+        //current day d-m-Y 00:00:00 timestamp
+        $start_timestamp = (isset($_SESSION['timestamp_'.$calendar_id]))? (int)($_SESSION['timestamp_'.$calendar_id]):(time()+86400);
+        //how many seconds in advance show the visits
+        $weeks_forward = (int)($number_of_weeks * 7 * 24 * 60 * 60);
+        $max = time() + $weeks_forward;
+        try{
+          $query = "SELECT * FROM mariocoski_event
+                    WHERE calendar_id=:id AND timestamp<:min AND timestamp>NOW() ORDER BY timestamp ASC";
+                      $run = $db->prepare($query);
+                      $run->execute(array(":id"=>$calendar_id,":min"=>(date("Y-m-d H:i:s",(int)($start_timestamp)))));
+                      $results = $run->fetchAll(PDO::FETCH_ASSOC);
+
+          }catch(PDOException $e){
+            echo json_encode(array("success"=>false,"content"=>array()));
+            exit;
+          }catch(Exception $e){
+            echo json_encode(array("success"=>false,"content"=>array()));
+            exit;
+          }
+       
+        if(count($results) > 0){
+          $first_result = date("d-m-Y",strtotime($results[count($results)-1]['timestamp']));
+          $start = strtotime($first_result);
+          $_SESSION['timestamp_'.$calendar_id] = strtotime($results[count($results)-1]['timestamp']);
+          $day_results = array();
+          $counter = 0;
+          $arrow_prev = false;
+          $arrow_next = true;
+          for($i=0; $i < count($results);$i++){
+            $current_date = date("d-m-Y",strtotime($results[$i]['timestamp']));
+            if($first_result == $current_date){
+              $day_results[$counter] = $results[$i];
+              $counter++;
+            }else if($current_date < date("d-m-Y",($start))){
+               $arrow_prev = true;
+            }            
+          }
+          $helper = new Helper();
+          $output = $helper->prepareSmallOutput($day_results,$calendar_id, $booking_url, $max_in_row,$calendar_details,$arrow_prev,$arrow_next);
+          echo json_encode(array("success"=>true,"content"=>$output));
+          exit;
+          
+           
+        }else{
+          
+        } 
         
+      }else if(isset($_POST['show']) && $_POST['show'] == "next"){
+      /* NEXT BUTTON */  
         
-      }else if(isset($_POST['show']) && $_POST['show'] == "prev"){
+        //current day d-m-Y 00:00:00 timestamp
+        $start_timestamp = (isset($_SESSION['timestamp_'.$calendar_id]))? (int)($_SESSION['timestamp_'.$calendar_id]):(time()+86400);
+        //how many seconds in advance show the visits
+        $weeks_forward = (int)($number_of_weeks * 7 * 24 * 60 * 60);
+        $max = time() + $weeks_forward;
+        
+        try{
+          $query = "SELECT * FROM mariocoski_event
+                    WHERE calendar_id=:id AND timestamp>:min AND timestamp<:max ORDER BY timestamp ASC";
+                      $run = $db->prepare($query);
+                      $run->execute(array(":id"=>$calendar_id,":min"=>(date("Y-m-d H:i:s",(int)($start_timestamp+86400))),":max"=>(date("Y-m-d H:i:s",$max))));
+                      $results = $run->fetchAll(PDO::FETCH_ASSOC);
+
+          }catch(PDOException $e){
+            echo json_encode(array("success"=>false,"content"=>array()));
+            exit;
+          }catch(Exception $e){
+            echo json_encode(array("success"=>false,"content"=>array()));
+            exit;
+          }
+          
+       
+        if(count($results) > 0){
+          $first_result = date("d-m-Y",strtotime($results[0]['timestamp']));
+           $start = strtotime($first_result);
+          $_SESSION['timestamp_'.$calendar_id] = strtotime($results[0]['timestamp']);
+          $day_results = array();
+          $counter = 0;
+          $arrow_prev = true;
+          $arrow_next = false;
+          for($i=0; $i < count($results);$i++){
+            $current_date = date("d-m-Y",strtotime($results[$i]['timestamp']));
+            if($first_result == $current_date){
+              $day_results[$counter] = $results[$i];
+              $counter++;
+            }else if($current_date > date("Y-m-d H:i:s",(int)($start+86400))){
+               $arrow_next = true;
+            }            
+          }
+               
+          $helper = new Helper();
+          $output = $helper->prepareSmallOutput($day_results,$calendar_id, $booking_url, $max_in_row,$calendar_details,$arrow_prev,$arrow_next);
+          echo json_encode(array("success"=>true,"content"=>$output));
+          exit;
+          
+           
+        }else{
+          
+        } 
         
       }else{
         //query db 
@@ -109,7 +205,7 @@ if(isset($_POST)){
           //first visit is a 
           $first_visit = date("d-m-Y",strtotime($results[0]['timestamp']));
           $start = strtotime($first_visit); // timestamp of d-m-Y 00:00:00
-          $_SESSION['timestamp'] = (int)$start;
+          $_SESSION['timestamp_'.$calendar_id] = (int)$start;
           
           $day_results = array();
           $counter = 0;
@@ -126,6 +222,8 @@ if(isset($_POST)){
           $output = $helper->prepareSmallOutput($day_results,$calendar_id, $booking_url, $max_in_row,$calendar_details,$arrow_prev,$arrow_next);
           echo json_encode(array("success"=>true,"content"=>$output));
           exit;
+        }else{
+          
         }
         
       
