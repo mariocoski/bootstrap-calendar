@@ -2,14 +2,12 @@
 require 'config/init.php';
 header('Access-Control-Allow-Origin: http://localhost/calendar/');
 header('Access-Control-Allow-Methods: POST');
- 
 if(isset($_POST)){
   if(isset($_POST['calendar_type']) && !empty($_POST['calendar_type']) && isset($_POST['id']) && is_numeric($_POST['id'])&& isset($_POST['number_of_weeks']) && is_numeric($_POST['number_of_weeks'])){
     if($_POST['calendar_type']=='big'){
      //HORIZONTAL BIG CALENDAR
       $calendar_id = (int)($_POST['id']); //sanitize numeric value
       $number_of_weeks = (int)($_POST['number_of_weeks']);//sanitize numeric value
-     
       if($number_of_weeks == 0 || $calendar_id == 0){
         echo json_encode(array("success"=>false,"content"=>array()));
         exit;
@@ -147,7 +145,6 @@ if(isset($_POST)){
             exit;
           }
           
-       
         if(count($results) > 0){
           $first_result = date("d-m-Y",strtotime($results[0]['timestamp']));
            $start = strtotime($first_result);
@@ -225,7 +222,6 @@ if(isset($_POST)){
         }
         echo json_encode(array("success"=>true,"content"=>$output));
         exit;
-      
       }
     }else{
       echo json_encode(array("success"=>false,"content"=>array()));
