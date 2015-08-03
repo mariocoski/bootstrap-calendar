@@ -1,9 +1,8 @@
 # Mariocoski Bootstrap Calendar 
 
 <a href='http://bootstrapcalendar.com/calendar.php'>Demo</a>
-
-        <h3>How to start?</h3>   
-          <h4>1. Download project from github or bootstrapcalendar.com</h4>
+How to start?   
+       <h4>1. Download project from github or bootstrapcalendar.com</h4>
           <h4>2. Place the folder on your local or remote server</h4>
           <h4>3. Open downloaded folder and import mariocoski_bootstrap.sql to your phpmyadmin (to create database and all necessary tables)</h4>
           <h4>4. If you change something with file location you have to update paths in config file</h4>
