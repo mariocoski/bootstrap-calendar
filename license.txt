@@ -1,5 +1,5 @@
 Copyright (c) 2015 Mariocoski
-@email mariuszrajczakowski@op.pl
+@email mariuszrajczakowski@gmail.com
 @github profile:    https://github.com/mariocoski
 @github app repository https://github.com/mariocoski/Bootstrap-calendar
 Bootstrap-calendar-demo is licensed under MIT license:
