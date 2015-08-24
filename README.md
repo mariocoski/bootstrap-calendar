@@ -9,4 +9,4 @@
 5. Run your server and open your index.php file
 6. To insert some data to each calendar run: calendar1_visit_creator.php and calendar2_visit_creator.php
 7. Open your index.php again and enjoy your booking calendar! 
-8. 
+
