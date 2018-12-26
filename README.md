@@ -1,6 +1,5 @@
 # Mariocoski Bootstrap Calendar 
 
-<a href='http://bootstrapcalendar.com/calendar.php'>Demo</a>
 #How to start?   
 1. Download project from github or bootstrapcalendar.com
 2. Place the folder on your local or remote server
