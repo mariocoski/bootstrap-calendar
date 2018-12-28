@@ -303,7 +303,7 @@ private function prepareDayContent($results,$first_day,$week_number,$year_number
               }else{
                 $output .= "<li class='horizontal-calendar-big-list-item'><a rel='nofollow' class='horizontal-calendar-big-link' href='".$booking_url."?calendar_id=".$calendar_id."&timestamp=".$visit_timestamp."'>".date("H:i",$visit_timestamp)."</a></li>";
               }
-          }else if($l == $max_display && $visit_timestamp > time()){
+          }else if($l == $max_display && ($visit_timestamp > time() || ($l+1 > $max_display))){
             $output .= "<li><a rel='nofollow' class='horizontal-calendar-big-link dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>more</a>
               <ul class='dropdown-menu'>";
               if($day_visits[$l]['booked']==1 || $visit_timestamp  < time()){

@@ -124,7 +124,7 @@
     <!-- BIG CALENDAR 2-->
     <!-- left column with company 2 details-->
       <div class="col-sm-4 hidden-xs">
-        <div class="panel panel-default panel-address">
+        <div class="panel panel-default panel-address panel-calendar-height">
           <div class="company-tag label label-primary">Company details</div>
             <div class='panel-body'>
               <h4><?php echo Helper::sanitize($company_name2); ?></h4>  

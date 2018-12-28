@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of calendar2_visit_creator
+ * Description of calendar1_visit_creator
  * This file help you to insert event timestamps to database quickly
  * Calendar 1  -> calendar_id = 334455
  * 

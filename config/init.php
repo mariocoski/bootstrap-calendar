@@ -15,11 +15,11 @@
 session_start();
 //define the paths for bootstrap, css and js files
 //change http://localhost/ to any location where you put downloaded bootstrap-calendar-demo folder
-define("BOOSTRAP_JS", "http://localhost/bootstrap-calendar-demo/bootstrap/js/");
-define("BOOTSTRAP_CSS", "http://localhost/bootstrap-calendar-demo/bootstrap/css/");
-define("CSS","http://localhost/bootstrap-calendar-demo/css/");
-define("JS","http://localhost/bootstrap-calendar-demo/js/");
-define("HOST_URL","http://localhost/bootstrap-calendar-demo/");
+define("BOOSTRAP_JS", "http://localhost/Bootstrap-calendar-master/bootstrap/js/");
+define("BOOTSTRAP_CSS", "http://localhost/Bootstrap-calendar-master/bootstrap/css/");
+define("CSS","http://localhost/Bootstrap-calendar-master/css/");
+define("JS","http://localhost/Bootstrap-calendar-master/js/");
+define("HOST_URL","http://localhost/Bootstrap-calendar-master/");
 
 //set default timezone to maintain proper event calculations
 date_default_timezone_set("Europe/London");
